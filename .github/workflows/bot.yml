@@ -1,10 +1,10 @@
-name: Insta Reels Downloader
+name: Insta Reels Downloader Bot
 
 on:
   push:
   pull_request:
   schedule:
-    - cron: '0 */6 * * *'   # runs every 6 hours to keep it alive
+    - cron: '0 */6 * * *'   # keeps workflow alive every 6 hours
   workflow_dispatch:
 
 jobs:
@@ -12,20 +12,24 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+      # 1️⃣ Checkout repository
       - name: Checkout code
         uses: actions/checkout@v4
 
+      # 2️⃣ Setup Python
       - name: Setup Python
         uses: actions/setup-python@v5
         with:
           python-version: '3.12'
 
+      # 3️⃣ Install dependencies
       - name: Install dependencies
         run: |
           pip install pyTelegramBotAPI requests
 
+      # 4️⃣ Run bot with secret token
       - name: Run bot
         env:
-          BOT_TOKEN: ${{ 8344596547:AAH25iHNTnMZSrPi1BJF3auG6r5b-fbq5jE }}
+          BOT_TOKEN: ${{ secrets.8344596547:AAH25iHNTnMZSrPi1BJF3auG6r5b-fbq5jE }}  # Load from GitHub Secrets
         run: |
           python3 main.py
